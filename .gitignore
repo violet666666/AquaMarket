@@ -1,0 +1,10 @@
+.env
+node_modules
+.turbo
+.next
+dist
+.wrangler
+coverage
+.DS_Store
+.idea
+*.swp
