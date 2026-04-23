@@ -29,18 +29,29 @@ export class ResendNotificationProviderService extends AbstractNotificationProvi
     let subject = "Notification from AquaMarket"
     let html = "<p>Notification received.</p>"
 
+    const templateData = data || {}
+
     if (template === "order-placed") {
       subject = "Pesanan Anda Berhasil - Glory Lumajang Koi Center"
-      const orderData = data.order as any
+      const orderData = (templateData as any).order as any
       html = `<p>Terima kasih atas pesanan Anda (Order #${orderData?.display_id || ""})!</p>
               <p>Kami akan segera memproses pesanan ikan koi Anda.</p>
               <p>Silakan login ke akun Anda untuk melihat detail dan status pesanan.</p>`
     } else if (template === "customer-welcome") {
       subject = "Selamat Datang di Glory Lumajang Koi Center!"
-      const customerData = data.customer as any
+      const customerData = (templateData as any).customer as any
       html = `<p>Halo ${customerData?.first_name || "Pelanggan Baru"},</p>
               <p>Selamat bergabung di AquaMarket - Glory Lumajang Koi Center.</p>
               <p>Temukan ikan koi idaman Anda sekarang!</p>`
+    } else if (template === "order-shipment") {
+      subject = "Pesanan Anda Sedang Dikirim - Glory Lumajang Koi Center"
+      const shipmentData = (templateData as any).shipment as any
+      const orderData = (templateData as any).order as any
+      html = `<p>Pesanan Anda (Order #${orderData?.display_id || ""}) telah dikirim!</p>
+              <p><strong>Ekspedisi:</strong> ${shipmentData?.provider || "N/A"}</p>
+              <p><strong>No. Resi:</strong> ${shipmentData?.tracking_number || "N/A"}</p>
+              ${shipmentData?.tracking_url ? `<p><a href="${shipmentData.tracking_url}">Lacak Paket Anda</a></p>` : ""}
+              <p>Terima kasih telah berbelanja di Glory Lumajang Koi Center!</p>`
     }
 
     try {
