@@ -7,6 +7,7 @@ import PaymentDetails from "modules/order/components/payment-details";
 import ShippingDetails from "modules/order/components/shipping-details";
 import React from "react";
 import { View, Pressable, Text } from "design";
+import OrderTracking from "modules/order/components/order-tracking";
 
 type OrderDetailsTemplateProps = {
   order: Order;
@@ -20,6 +21,9 @@ const OrderDetailsTemplate: React.FC<OrderDetailsTemplateProps> = ({
       <View className="content-container flex flex-row justify-center">
         <View className="h-full w-full max-w-4xl bg-white">
           <OrderDetails order={order} showStatus />
+          <View className="px-10 py-6 border-b border-gray-200">
+            <OrderTracking order={order} />
+          </View>
           <Items
             items={order.items}
             region={order.region}
