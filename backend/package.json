@@ -23,9 +23,12 @@
   },
   "dependencies": {
     "@medusajs/admin-sdk": "2.13.6",
+    "@medusajs/auth-google": "^2.13.6",
     "@medusajs/cli": "2.13.6",
     "@medusajs/framework": "2.13.6",
-    "@medusajs/medusa": "2.13.6"
+    "@medusajs/medusa": "2.13.6",
+    "pg": "^8.20.0",
+    "resend": "^6.12.2"
   },
   "devDependencies": {
     "@medusajs/test-utils": "2.13.6",
