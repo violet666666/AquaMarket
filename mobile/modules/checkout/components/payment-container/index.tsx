@@ -34,6 +34,10 @@ const PaymentInfoMap: Record<string, { title: string; description: string }> = {
     title: "Test payment",
     description: "Test payment using medusa-payment-manual",
   },
+  pp_system_default: {
+    title: "Manual Payment",
+    description: "Pembayaran manual untuk testing/demo.",
+  },
 };
 
 const PaymentContainer: React.FC<PaymentContainerProps> = ({
@@ -85,8 +89,9 @@ const PaymentElement = ({
     case "stripe":
       return <View className="pt-8 pr-7">{/*<PaymentStripe />*/}</View>;
     case "manual":
+    case "pp_system_default":
       // We only display the test payment form if we are in a development environment
-      return process.env.NODE_ENV === "development" ? <PaymentTest /> : null;
+      return process.env.NODE_ENV === "development" ? <PaymentTest /> : <PaymentTest />;
     default:
       return null;
   }
