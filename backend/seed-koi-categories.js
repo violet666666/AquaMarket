@@ -35,8 +35,8 @@ async function seedKoiCategories() {
       }
 
       await client.query(
-        `INSERT INTO product_category (id, name, handle, description, is_active, is_internal, rank, created_at, updated_at)
-         VALUES ($1, $2, $3, $4, true, false, $5, NOW(), NOW())`,
+        `INSERT INTO product_category (id, name, handle, description, is_active, is_internal, rank, mpath, created_at, updated_at)
+         VALUES ($1, $2, $3, $4, true, false, $5, $1, NOW(), NOW())`,
         [id, cat.name, cat.handle, cat.description, categories.indexOf(cat)]
       );
       console.log(`  ✓ Created category: ${cat.name}`);
