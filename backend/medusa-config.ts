@@ -50,5 +50,8 @@ module.exports = defineConfig({
         ],
       },
     },
-  ]
+  ],
+  admin: {
+    backendUrl: "http://localhost:9000",
+  },
 })
