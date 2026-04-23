@@ -20,14 +20,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mobilemedusa"
+      "bundleIdentifier": "com.glkc.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.aleqsio.exporeanimatednativewindtypescripttemplate"
+      "package": "com.glkc.app"
     },
     "web": {
       "bundler": "metro",
