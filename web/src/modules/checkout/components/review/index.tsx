@@ -3,12 +3,15 @@
 import { Heading, Text, clx } from "@medusajs/ui"
 
 import PaymentButton from "../payment-button"
-import { useSearchParams } from "next/navigation"
+import MidtransPayment from "../midtrans-payment"
+import { useSearchParams, useParams } from "next/navigation"
 
 const Review = ({ cart }: { cart: any }) => {
   const searchParams = useSearchParams()
+  const params = useParams()
 
   const isOpen = searchParams.get("step") === "review"
+  const countryCode = (params?.countryCode as string) || "id"
 
   const paidByGiftcard =
     cart?.gift_cards && cart?.gift_cards?.length > 0 && cart?.total === 0
@@ -30,7 +33,7 @@ const Review = ({ cart }: { cart: any }) => {
             }
           )}
         >
-          Review
+          Tinjauan & Pembayaran
         </Heading>
       </div>
       {isOpen && previousStepsCompleted && (
@@ -38,13 +41,27 @@ const Review = ({ cart }: { cart: any }) => {
           <div className="flex items-start gap-x-1 w-full mb-6">
             <div className="w-full">
               <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                By clicking the Place Order button, you confirm that you have
-                read, understand and accept our Terms of Use, Terms of Sale and
-                Returns Policy and acknowledge that you have read Medusa
-                Store&apos;s Privacy Policy.
+                Dengan mengklik tombol &quot;Bayar Sekarang&quot;, Anda
+                mengonfirmasi bahwa Anda telah membaca, memahami, dan menerima
+                Syarat Penggunaan, Syarat Penjualan, serta Kebijakan
+                Pengembalian kami.
               </Text>
             </div>
           </div>
+
+          {/* Midtrans Payment Button */}
+          <div className="mb-4">
+            <MidtransPayment cart={cart} countryCode={countryCode} />
+          </div>
+
+          {/* Divider */}
+          <div className="flex items-center w-full my-4">
+            <div className="flex-1 border-t border-ui-border-base"></div>
+            <span className="px-3 text-xs text-ui-fg-muted">atau metode lain</span>
+            <div className="flex-1 border-t border-ui-border-base"></div>
+          </div>
+
+          {/* Original Medusa payment button as fallback */}
           <PaymentButton cart={cart} data-testid="submit-order-button" />
         </>
       )}

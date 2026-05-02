@@ -6,9 +6,9 @@ import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
 
 export const metadata: Metadata = {
-  title: "Medusa Next.js Starter Template",
+  title: "AquaMarket — Glory Lumajang Koi Center",
   description:
-    "A performant frontend ecommerce starter template with Next.js 15 and Medusa.",
+    "Toko online ikan koi premium. Koleksi lengkap Kohaku, Showa, Sanke, dan varietas koi terbaik dengan Live Arrival Guarantee.",
 }
 
 export default async function Home(props: {

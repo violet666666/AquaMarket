@@ -21,23 +21,23 @@ const Register = ({ setCurrentView }: Props) => {
       data-testid="register-page"
     >
       <h1 className="text-large-semi uppercase mb-6">
-        Become a Medusa Store Member
+        Daftar Akun AquaMarket
       </h1>
       <p className="text-center text-base-regular text-ui-fg-base mb-4">
-        Create your Medusa Store Member profile, and get access to an enhanced
-        shopping experience.
+        Buat akun untuk pengalaman belanja yang lebih baik dan akses riwayat
+        pesanan Anda.
       </p>
       <form className="w-full flex flex-col" action={formAction}>
         <div className="flex flex-col w-full gap-y-2">
           <Input
-            label="First name"
+            label="Nama Depan"
             name="first_name"
             required
             autoComplete="given-name"
             data-testid="first-name-input"
           />
           <Input
-            label="Last name"
+            label="Nama Belakang"
             name="last_name"
             required
             autoComplete="family-name"
@@ -52,7 +52,7 @@ const Register = ({ setCurrentView }: Props) => {
             data-testid="email-input"
           />
           <Input
-            label="Phone"
+            label="Telepon"
             name="phone"
             type="tel"
             autoComplete="tel"
@@ -69,33 +69,33 @@ const Register = ({ setCurrentView }: Props) => {
         </div>
         <ErrorMessage error={message} data-testid="register-error" />
         <span className="text-center text-ui-fg-base text-small-regular mt-6">
-          By creating an account, you agree to Medusa Store&apos;s{" "}
+          Dengan membuat akun, Anda menyetujui{" "}
           <LocalizedClientLink
             href="/content/privacy-policy"
             className="underline"
           >
-            Privacy Policy
+            Kebijakan Privasi
           </LocalizedClientLink>{" "}
-          and{" "}
+          dan{" "}
           <LocalizedClientLink
             href="/content/terms-of-use"
             className="underline"
           >
-            Terms of Use
-          </LocalizedClientLink>
-          .
+            Syarat dan Ketentuan
+          </LocalizedClientLink>{" "}
+          AquaMarket.
         </span>
         <SubmitButton className="w-full mt-6" data-testid="register-button">
-          Join
+          Daftar
         </SubmitButton>
       </form>
       <span className="text-center text-ui-fg-base text-small-regular mt-6">
-        Already a member?{" "}
+        Sudah punya akun?{" "}
         <button
           onClick={() => setCurrentView(LOGIN_VIEW.SIGN_IN)}
           className="underline"
         >
-          Sign in
+          Masuk di sini
         </button>
         .
       </span>
