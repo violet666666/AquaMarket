@@ -1,7 +1,7 @@
 # CURRENT-PROGRESS.md — AquaMarket (Glory Lumajang Koi Center)
 
-**Terakhir Diperbarui:** 3 Mei 2026 (06:35 WIB)  
-**Status Keseluruhan:** 🟡 Dalam Pengembangan (~70%)
+**Terakhir Diperbarui:** 3 Mei 2026 (20:55 WIB)  
+**Status Keseluruhan:** 🟡 Dalam Pengembangan (~72%)
 
 ---
 
@@ -112,10 +112,10 @@ AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (b
   - [ ] Ganti `medusa-react` v1 → custom hooks atau tanstack query
   - [ ] Upgrade Expo SDK 49 → 52
 
-- [ ] **Security**
-  - [ ] Ganti `JWT_SECRET` dari "supersecret" → random string
-  - [ ] Ganti `COOKIE_SECRET` dari "supersecret" → random string
-  - [ ] Konfigurasi `REDIS_URL` (Upstash)
+- [x] **Security** — JWT_SECRET & COOKIE_SECRET sudah diganti ke random 256-bit hex
+  - [x] ~~Ganti `JWT_SECRET` dari "supersecret" → random string~~
+  - [x] ~~Ganti `COOKIE_SECRET` dari "supersecret" → random string~~
+  - [ ] Konfigurasi `REDIS_URL` (Upstash) — opsional, Medusa jalan tanpa Redis
 
 ### 🟡 High Priority (Needed for MVP)
 
@@ -175,8 +175,8 @@ AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (b
 |---|---|
 | `DATABASE_URL` | ✅ Neon PostgreSQL |
 | `REDIS_URL` | ❌ Belum dikonfigurasi |
-| `JWT_SECRET` | ⚠️ Masih "supersecret" |
-| `COOKIE_SECRET` | ⚠️ Masih "supersecret" |
+| `JWT_SECRET` | ✅ Secure 256-bit hex |
+| `COOKIE_SECRET` | ✅ Secure 256-bit hex |
 | `GOOGLE_CLIENT_ID` | ✅ |
 | `GOOGLE_CLIENT_SECRET` | ✅ |
 | `RESEND_API_KEY` | ✅ |
