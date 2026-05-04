@@ -11,6 +11,10 @@ export const metadata: Metadata = {
   },
   description: "Toko online ikan koi premium. Koleksi lengkap Kohaku, Showa, Sanke, dan varietas koi terbaik dengan Live Arrival Guarantee.",
   keywords: ["ikan koi", "koi premium", "beli koi online", "Glory Lumajang", "Kohaku", "Showa", "Sanke", "aquamarket"],
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
 }
 
 export default function RootLayout(props: { children: React.ReactNode }) {

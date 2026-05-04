@@ -17,11 +17,12 @@ export default async function Footer() {
           <div>
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
+              className="flex items-center gap-3 hover:opacity-90 transition-opacity"
             >
-              AquaMarket
+              <img src="/LOGO-GLORY-KOI.png" alt="Glory Koi Lumajang" width={56} height={56} className="rounded-full" />
+              <span className="txt-compact-xlarge-plus text-ui-fg-subtle uppercase font-bold">AquaMarket</span>
             </LocalizedClientLink>
-            <p className="text-ui-fg-muted txt-small mt-2 max-w-xs">
+            <p className="text-ui-fg-muted txt-small mt-3 max-w-xs">
               Glory Lumajang Koi Center — Koleksi ikan koi premium berkualitas tinggi dengan Live Arrival Guarantee.
             </p>
           </div>

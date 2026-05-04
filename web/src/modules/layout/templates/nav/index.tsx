@@ -29,10 +29,19 @@ export default async function Nav() {
           <div className="flex items-center h-full">
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
+              className="flex items-center gap-2 hover:opacity-90 transition-opacity"
               data-testid="nav-store-link"
             >
-              AquaMarket
+              <img
+                src="/favicon.png"
+                alt="Glory Koi Lumajang"
+                width={36}
+                height={36}
+                className="rounded-full"
+              />
+              <span className="txt-compact-xlarge-plus uppercase font-bold hidden small:inline" style={{ color: "#01696f" }}>
+                AquaMarket
+              </span>
             </LocalizedClientLink>
           </div>
 
