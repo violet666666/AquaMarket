@@ -7,6 +7,9 @@
       ],
       "medusa-react": [
         "./lib/medusa-compat"
+      ],
+      "@medusajs/medusa": [
+        "./lib/medusa-types"
       ]
     }
   },

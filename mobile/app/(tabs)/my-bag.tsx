@@ -1,18 +1,16 @@
 import { CartScreen } from '@/modules/cart/screen'
 import { Stack } from 'expo-router'
-import { useCart } from 'medusa-react'
 
 export default function CartPage() {
-  const { totalItems } = useCart()
-
   return (
     <>
       <Stack.Screen
         options={{
-          title: `My Bag (${totalItems})`,
+          title: 'Keranjang Saya',
+          headerStyle: { backgroundColor: '#01696f' },
+          headerTintColor: 'white',
         }}
       />
-
       <CartScreen />
     </>
   )

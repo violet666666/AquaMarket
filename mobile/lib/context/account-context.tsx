@@ -1,9 +1,6 @@
 import { medusaClient } from "lib/config";
-import { Customer } from "@medusajs/medusa";
-import { useMeCustomer } from "medusa-react";
 import { useRouter } from "expo-router";
-import React, { createContext, useCallback, useContext, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 export enum LOGIN_VIEW {
   SIGN_IN = "sign-in",
@@ -11,7 +8,7 @@ export enum LOGIN_VIEW {
 }
 
 interface AccountContext {
-  customer?: Omit<Customer, "password_hash">;
+  customer?: any;
   retrievingCustomer: boolean;
   loginView: [LOGIN_VIEW, React.Dispatch<React.SetStateAction<LOGIN_VIEW>>];
   checkSession: () => void;
@@ -25,21 +22,28 @@ interface AccountProviderProps {
   children?: React.ReactNode;
 }
 
-const handleDeleteSession = () => {
-  return medusaClient.auth.deleteSession();
-};
-
 export const AccountProvider = ({ children }: AccountProviderProps) => {
-  const {
-    customer,
-    isLoading: retrievingCustomer,
-    refetch,
-    remove,
-  } = useMeCustomer({ onError: () => {} });
-
+  const [customer, setCustomer] = useState<any>(null);
+  const [retrievingCustomer, setRetrievingCustomer] = useState(true);
   const loginView = useState<LOGIN_VIEW>(LOGIN_VIEW.SIGN_IN);
-
   const router = useRouter();
+
+  // Fetch customer on mount
+  const fetchCustomer = useCallback(async () => {
+    setRetrievingCustomer(true);
+    try {
+      const result = await medusaClient.store.customer.retrieve();
+      setCustomer(result.customer);
+    } catch {
+      setCustomer(null);
+    } finally {
+      setRetrievingCustomer(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchCustomer();
+  }, [fetchCustomer]);
 
   const checkSession = useCallback(() => {
     if (!customer && !retrievingCustomer) {
@@ -47,20 +51,17 @@ export const AccountProvider = ({ children }: AccountProviderProps) => {
     }
   }, [customer, retrievingCustomer, router]);
 
-  const useDeleteSession = useMutation({
-    mutationFn: handleDeleteSession,
-    mutationKey: ["delete-session"],
-  });
-
-  const handleLogout = () => {
-    useDeleteSession.mutate(undefined, {
-      onSuccess: () => {
-        remove();
-        loginView[1](LOGIN_VIEW.SIGN_IN);
-        router.push("/");
-      },
-    });
-  };
+  const handleLogout = useCallback(async () => {
+    try {
+      // Medusa v2: delete auth session
+      await medusaClient.auth.logout();
+    } catch {
+      // Session might already be expired
+    }
+    setCustomer(null);
+    loginView[1](LOGIN_VIEW.SIGN_IN);
+    router.push("/");
+  }, [router, loginView]);
 
   return (
     <AccountContext.Provider
@@ -69,7 +70,7 @@ export const AccountProvider = ({ children }: AccountProviderProps) => {
         retrievingCustomer,
         loginView,
         checkSession,
-        refetchCustomer: refetch,
+        refetchCustomer: fetchCustomer,
         handleLogout,
       }}
     >
@@ -80,7 +81,6 @@ export const AccountProvider = ({ children }: AccountProviderProps) => {
 
 export const useAccount = () => {
   const context = useContext(AccountContext);
-
   if (context === null) {
     throw new Error("useAccount must be used within a AccountProvider");
   }

@@ -9,6 +9,7 @@ module.exports = function (api) {
           root: ["."],
           alias: {
             "medusa-react": "./lib/medusa-compat",
+            "@medusajs/medusa": "./lib/medusa-types",
             "@": ".",
           },
         },

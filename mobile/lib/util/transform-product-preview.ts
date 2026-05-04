@@ -1,12 +1,13 @@
 import { getPercentageDiff } from '@/lib/util/get-precentage-diff'
-import { Product, Region } from '@medusajs/medusa'
+// v2 compatible: use any for Product and Region types
+
 import { formatAmount } from 'medusa-react'
 import { ProductPreviewType } from '@/types/global'
 import { CalculatedVariant } from '@/types/medusa'
 
 const transformProductPreview = (
-  product: Product,
-  region: Region
+  product: any,
+  region: any
 ): ProductPreviewType => {
   const variants = product.variants as CalculatedVariant[]
 

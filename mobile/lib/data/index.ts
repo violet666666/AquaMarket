@@ -1,10 +1,12 @@
 import { medusaClient } from '@/lib/config'
-import { Product, StoreGetProductsParams } from '@medusajs/medusa'
 
 const COL_LIMIT = 15
 
-const getFeaturedProducts = async (): Promise<Product[]> => {
-  const payload = {} as Record<string, unknown>
+/**
+ * Get featured products using Medusa v2 SDK
+ */
+const getFeaturedProducts = async (): Promise<any[]> => {
+  const payload: Record<string, unknown> = {}
 
   if (process.env.FEATURED_PRODUCTS) {
     payload.id = process.env.FEATURED_PRODUCTS as string
@@ -12,33 +14,35 @@ const getFeaturedProducts = async (): Promise<Product[]> => {
     payload.limit = 3
   }
 
-  const products = await medusaClient.products
-    .list(payload)
-    .then(({ products }) => products)
-    .catch((_) => [])
-
-  return products
+  try {
+    const { products } = await medusaClient.store.product.list(payload)
+    return products
+  } catch {
+    return []
+  }
 }
 
-// get global data used in header and footer
+/**
+ * Get global data used in header and footer
+ */
 const getGlobalData = async () => {
   let totalCount = 0
 
-  const collections = await medusaClient.collections
-    .list({ limit: COL_LIMIT })
-    .then(({ collections, count }) => {
-      totalCount = count
-      return collections
-    })
-    .catch((_) => undefined)
+  let collections: any[] = []
+  try {
+    const result = await medusaClient.store.collection.list({ limit: COL_LIMIT })
+    collections = result.collections || []
+    totalCount = result.count || 0
+  } catch {
+    collections = []
+  }
 
   const featuredProducts = await getFeaturedProducts()
 
   return {
     navData: {
       hasMoreCollections: totalCount > COL_LIMIT,
-      collections:
-        collections?.map((c) => ({ id: c.id, title: c.title })) || [],
+      collections: collections.map((c: any) => ({ id: c.id, title: c.title })),
       featuredProducts,
     },
   }
@@ -46,87 +50,88 @@ const getGlobalData = async () => {
 
 export const getSiteData = async () => {
   const globalData = await getGlobalData()
-
-  return {
-    site: globalData,
-  }
+  return { site: globalData }
 }
 
-// get data for a specific product, as well as global data
+/**
+ * Get data for a specific product by handle
+ */
 export const getProductData = async (handle: string) => {
-  const data = await medusaClient.products
-    .list({ handle })
-    .then(({ products }) => products)
+  try {
+    const { products } = await medusaClient.store.product.list({ handle })
+    const product = products[0]
 
-  const product = data[0]
+    if (!product) {
+      throw new Error(`Product with handle ${handle} not found`)
+    }
 
-  if (!product) {
-    throw new Error(`Product with handle ${handle} not found`)
-  }
-
-  return {
-    page: {
-      data: product,
-    },
+    return { page: { data: product } }
+  } catch (error) {
+    throw error
   }
 }
 
 const getInitialProducts = async (collectionId: string) => {
-  const result = await medusaClient.products
-    .list({ collection_id: [collectionId], limit: 10 })
-    .then(({ products, count }) => {
-      return {
-        initialProducts: products,
-        count: count,
-        hasMore: count > 10,
-      }
+  try {
+    const { products, count } = await medusaClient.store.product.list({
+      collection_id: [collectionId],
+      limit: 10,
     })
-    .catch((_) => ({ initialProducts: [], count: 0, hasMore: false }))
 
-  return result
+    return {
+      initialProducts: products,
+      count: count || 0,
+      hasMore: (count || 0) > 10,
+    }
+  } catch {
+    return { initialProducts: [], count: 0, hasMore: false }
+  }
 }
 
-// get data for a specific collection, as well as global data
+/**
+ * Get data for a specific collection
+ */
 export const getCollectionData = async (id: string) => {
   const siteData = await getGlobalData()
 
-  const data = await medusaClient.collections
-    .retrieve(id)
-    .then(({ collection }) => collection)
-    .catch(() => undefined)
-
-  if (!data) {
-    throw new Error(`Collection with handle ${id} not found`)
+  let data: any = null
+  try {
+    const result = await medusaClient.store.collection.retrieve(id)
+    data = result.collection
+  } catch {
+    throw new Error(`Collection with id ${id} not found`)
   }
 
   const additionalData = await getInitialProducts(id)
 
   return {
-    page: {
-      data,
-      additionalData,
-    },
+    page: { data, additionalData },
     site: siteData,
   }
 }
 
 type FetchProductListParams = {
   pageParam?: number
-  queryParams: StoreGetProductsParams
+  queryParams: any
 }
 
+/**
+ * Fetch products list with pagination
+ */
 export const fetchProductsList = async ({
   pageParam = 0,
   queryParams,
 }: FetchProductListParams) => {
-  const { products, count, offset } = await medusaClient.products.list({
+  const { products, count } = await medusaClient.store.product.list({
     limit: 12,
     offset: pageParam,
     ...queryParams,
   })
 
+  const offset = pageParam
+
   return {
     response: { products, count },
-    nextPage: count > offset + 12 ? offset + 12 : null,
+    nextPage: (count || 0) > offset + 12 ? offset + 12 : null,
   }
 }

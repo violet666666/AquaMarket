@@ -1,21 +1,21 @@
-import { Tabs, useNavigation, usePathname } from 'expo-router'
+import { Tabs, usePathname } from 'expo-router'
 import {
   ShoppingBagIcon,
   HomeIcon,
-  ShoppingCartIcon,
-  BuildingStorefrontIcon,
   UserCircleIcon,
 } from 'react-native-heroicons/solid'
 import {
   ShoppingBagIcon as ShoppingBagIconOutline,
   HomeIcon as HomeIconOutline,
-  ShoppingCartIcon as ShoppingCartIconOutline,
-  BuildingStorefrontIcon as BuildingStorefrontIconOutline,
   UserCircleIcon as UserCircleIconOutline,
 } from 'react-native-heroicons/outline'
 import { View, Text } from '@/design'
-import { useCart } from 'medusa-react'
 import { LogBox } from 'react-native'
+
+// AquaMarket brand colors
+const BRAND_TEAL = '#01696f'
+const BRAND_TEAL_LIGHT = '#019fa7'
+const BRAND_INACTIVE = '#9ca3af'
 
 if (__DEV__) {
   LogBox.ignoreLogs([
@@ -37,32 +37,9 @@ if (__DEV__) {
   LogBox.ignoreAllLogs()
 }
 
-const ShoppingBagIconWithItems = ({ focused, color }) => {
-  const { totalItems } = useCart()
-
+const ShoppingBagIconWithBadge = ({ focused, color }: { focused: boolean; color: string }) => {
   return (
     <View className={'relative'}>
-      <View
-        style={{
-          position: 'absolute',
-          right: -5,
-          zIndex: 1,
-          width: 14,
-          height: 14,
-          backgroundColor: 'red',
-          display: Boolean(totalItems) ? 'flex' : 'none',
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: 100,
-        }}
-      >
-        <Text
-          className="text-white"
-          style={{ fontSize: 10, fontWeight: 'bold' }}
-        >
-          {totalItems}
-        </Text>
-      </View>
       {focused ? (
         <ShoppingBagIcon color={color} size={27} />
       ) : (
@@ -71,22 +48,34 @@ const ShoppingBagIconWithItems = ({ focused, color }) => {
     </View>
   )
 }
+
 const TabBar = () => {
   const pathname = usePathname()
 
   return (
     <Tabs
       screenOptions={{
-        headerTintColor: 'black',
         headerShown: false,
-        tabBarActiveTintColor: 'black',
-        tabBarInactiveTintColor: 'black',
+        tabBarActiveTintColor: BRAND_TEAL,
+        tabBarInactiveTintColor: BRAND_INACTIVE,
+        tabBarStyle: {
+          backgroundColor: 'white',
+          borderTopColor: '#f3f4f6',
+          borderTopWidth: 1,
+          height: 60,
+          paddingBottom: 8,
+          paddingTop: 4,
+        },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: '600',
+        },
       }}
     >
       <Tabs.Screen
         name="(home)"
         options={{
-          title: 'Home',
+          title: 'Beranda',
           headerShown: false,
           tabBarIcon: ({ color, focused }) =>
             ['products', 'store'].some((option) => pathname.includes(option)) ||
@@ -101,14 +90,17 @@ const TabBar = () => {
         name="my-bag"
         options={{
           headerShown: true,
-          tabBarLabel: 'My Bag',
-          tabBarIcon: (props) => <ShoppingBagIconWithItems {...props} />,
+          headerTitle: 'Keranjang',
+          headerStyle: { backgroundColor: BRAND_TEAL },
+          headerTintColor: 'white',
+          tabBarLabel: 'Keranjang',
+          tabBarIcon: (props) => <ShoppingBagIconWithBadge {...props} />,
         }}
       />
       <Tabs.Screen
         name="account"
         options={{
-          title: 'Account',
+          title: 'Akun',
           tabBarIcon: ({ color, focused }) =>
             focused ? (
               <UserCircleIcon color={color} size={27} />
@@ -126,6 +118,7 @@ const TabBar = () => {
     </Tabs>
   )
 }
+
 export default function TabsLayout() {
   return <TabBar />
 }

@@ -6,7 +6,7 @@ const BrandingWidget = () => {
     // Override page title
     document.title = "Glory Lumajang Koi Center — Admin"
 
-    // Inject custom CSS for teal accent
+    // Inject custom CSS for teal accent + koi branding
     const styleId = "glkc-branding-css"
     if (!document.getElementById(styleId)) {
       const style = document.createElement("style")
@@ -50,45 +50,67 @@ const BrandingWidget = () => {
           background-color: rgba(1, 105, 111, 0.1) !important;
         }
 
-        /* Replace sidebar logo text */
+        /* Replace sidebar logo */
         .glkc-logo {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 10px;
           font-weight: 700;
-          font-size: 14px;
+          font-size: 13px;
           color: #01696f;
           letter-spacing: -0.02em;
+          padding: 4px 0;
         }
         .glkc-logo-icon {
-          width: 32px;
-          height: 32px;
-          background: linear-gradient(135deg, #01696f 0%, #01898f 100%);
-          border-radius: 8px;
+          width: 36px;
+          height: 36px;
+          background: linear-gradient(135deg, #01696f 0%, #019fa7 50%, #d4a017 100%);
+          border-radius: 10px;
           display: flex;
           align-items: center;
           justify-content: center;
           color: white;
+          font-size: 18px;
+          box-shadow: 0 2px 8px rgba(1, 105, 111, 0.3);
+        }
+        .glkc-logo-text {
+          display: flex;
+          flex-direction: column;
+          line-height: 1.2;
+        }
+        .glkc-logo-name {
           font-weight: 800;
-          font-size: 11px;
-          letter-spacing: 0.02em;
+          font-size: 13px;
+          color: #01696f;
+        }
+        .glkc-logo-sub {
+          font-weight: 400;
+          font-size: 10px;
+          color: #6b7280;
         }
       `
       document.head.appendChild(style)
     }
 
-    // Override sidebar branding
+    // Override sidebar branding with koi logo
     const observer = new MutationObserver(() => {
       // Find sidebar logo/title and replace
       const sidebarLinks = document.querySelectorAll("a[href='/app']")
       sidebarLinks.forEach((link) => {
-        if (link.textContent?.includes("Medusa") && !link.querySelector(".glkc-logo")) {
-          link.innerHTML = `
-            <div class="glkc-logo">
-              <div class="glkc-logo-icon">GLKC</div>
-              <span>Glory Lumajang Koi Center</span>
-            </div>
-          `
+        if (!link.querySelector(".glkc-logo")) {
+          // Check if it's the sidebar brand link (not a nav link)
+          const text = link.textContent || ""
+          if (text.includes("Medusa") || text.trim().length < 20) {
+            link.innerHTML = `
+              <div class="glkc-logo">
+                <div class="glkc-logo-icon">🐟</div>
+                <div class="glkc-logo-text">
+                  <span class="glkc-logo-name">Glory Koi Center</span>
+                  <span class="glkc-logo-sub">AquaMarket Admin</span>
+                </div>
+              </div>
+            `
+          }
         }
       })
     })

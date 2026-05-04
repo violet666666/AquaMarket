@@ -207,3 +207,77 @@ export function useUpdateCart(cartId: string) {
 export const orderKeys = {
   all: ["orders"] as const,
 }
+
+// ========================================
+// Cart Line Item Mutations
+// ========================================
+export function useCreateLineItem(cartId: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (data: { variant_id: string; quantity: number }) => {
+      const result = await medusaClient.store.cart.createLineItem(cartId, data)
+      return result
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] })
+    },
+  })
+}
+
+export function useDeleteLineItem(cartId: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async ({ lineId }: { lineId: string }) => {
+      const result = await medusaClient.store.cart.deleteLineItem(cartId, lineId)
+      return result
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] })
+    },
+  })
+}
+
+export function useUpdateLineItem(cartId: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async ({ lineId, quantity }: { lineId: string; quantity: number }) => {
+      const result = await medusaClient.store.cart.updateLineItem(cartId, lineId, { quantity })
+      return result
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] })
+    },
+  })
+}
+
+// ========================================
+// Payment Session
+// ========================================
+export function useSetPaymentSession(cartId: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async ({ provider_id }: { provider_id: string }) => {
+      const result = await medusaClient.store.payment.initiatePaymentSession(
+        { id: cartId } as any,
+        { provider_id }
+      )
+      return result
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] })
+    },
+  })
+}
+
+// ========================================
+// Complete Cart
+// ========================================
+export function useCompleteCart(cartId: string) {
+  return useMutation({
+    mutationFn: async () => {
+      const result = await medusaClient.store.cart.complete(cartId)
+      return result
+    },
+  })
+}
+
