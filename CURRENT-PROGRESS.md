@@ -1,13 +1,13 @@
 # CURRENT-PROGRESS.md — AquaMarket (Glory Lumajang Koi Center)
 
-**Terakhir Diperbarui:** 4 Mei 2026 (13:32 WIB)  
-**Status Keseluruhan:** 🟡 Dalam Pengembangan (~78%)
+**Terakhir Diperbarui:** 4 Mei 2026 (14:36 WIB)  
+**Status Keseluruhan:** 🟡 Dalam Pengembangan (~82%)
 
 ---
 
 ## Ringkasan Singkat
 
-AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (backend), **Next.js 15** (web storefront), dan **Expo/React Native** (mobile app). Proyek sudah melewati fase fondasi — backend, web, dan mobile sudah terinisialisasi dan saling terhubung. Kustomisasi admin panel sudah cukup matang. **Storefront sudah fully branded, dilokalkan, dan dilengkapi bilingual (ID/EN).** Integrasi Midtrans Snap sudah dikodekan. Email template sudah di-upgrade ke HTML responsif. Filter produk koi dan kategori varietas sudah tersedia.
+AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (backend), **Next.js 15** (web storefront), dan **Expo/React Native** (mobile app). Proyek sudah melewati fase fondasi — backend, web, dan mobile sudah terinisialisasi dan saling terhubung. Kustomisasi admin panel sudah cukup matang. **Storefront sudah fully branded dengan logo asli, dilokalkan, dilengkapi bilingual (ID/EN), filter produk koi, dan email HTML responsif.** Integrasi Midtrans Snap sudah dikodekan. Railway healthcheck sudah diperbaiki. Seed data (kategori + region + currency) berhasil dijalankan.
 
 ---
 
