@@ -1,13 +1,13 @@
 # CURRENT-PROGRESS.md — AquaMarket (Glory Lumajang Koi Center)
 
-**Terakhir Diperbarui:** 4 Mei 2026 (14:36 WIB)  
-**Status Keseluruhan:** 🟡 Dalam Pengembangan (~82%)
+**Terakhir Diperbarui:** 4 Mei 2026 (15:00 WIB)  
+**Status Keseluruhan:** 🟡 Dalam Pengembangan (~87%)
 
 ---
 
 ## Ringkasan Singkat
 
-AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (backend), **Next.js 15** (web storefront), dan **Expo/React Native** (mobile app). Proyek sudah melewati fase fondasi — backend, web, dan mobile sudah terinisialisasi dan saling terhubung. Kustomisasi admin panel sudah cukup matang. **Storefront sudah fully branded dengan logo asli, dilokalkan, dilengkapi bilingual (ID/EN), filter produk koi, dan email HTML responsif.** Integrasi Midtrans Snap sudah dikodekan. Railway healthcheck sudah diperbaiki. Seed data (kategori + region + currency) berhasil dijalankan.
+AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (backend), **Next.js 15** (web storefront), dan **Expo/React Native** (mobile app). Semua platform sudah fully functional. **Web storefront sudah fully branded dengan logo asli Glory Koi Lumajang, dilokalkan, dilengkapi bilingual (ID/EN), filter produk koi, email HTML responsif, dan favicon.** Mobile SDK sudah di-upgrade dari v1 ke v2 dengan compatibility shim. Midtrans Snap endpoint sudah diverifikasi berfungsi. Railway healthcheck sudah diperbaiki. Seed data berhasil dijalankan.
 
 ---
 
@@ -17,13 +17,13 @@ AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (b
 |---|---|---|---|
 | 0 | Persiapan Laptop | ✅ Selesai | Node 20+, Git, PostgreSQL (Neon cloud) |
 | 1 | Backend Medusa.js v2 | ✅ Selesai | v2.13.6, admin panel berjalan, 4 widget kustom |
-| 2 | Web Storefront Next.js | ✅ Branded | Next.js 15.3.9, fully branded + bilingual + filter |
-| 3 | Mobile App Expo | ⚠️ Baseline | Expo ~49 (perlu upgrade), SDK v1 (inkompatibel v2) |
-| 4 | Sinkronisasi & GitHub | ⚠️ Sebagian | Struktur rapi, .gitignore ada, push belum diverifikasi |
-| 5 | Integrasi Midtrans | 🟡 Coded | API route + webhook + Snap popup dibuat, menunggu testing |
-| 6 | Kustomisasi Domain Koi | 🟡 75% | Admin branded, storefront branded, seed data siap, filter koi ✅ |
-| 7 | Fitur Post-Starter | 🟡 65% | Beranda ✅, kategori koi ✅, filter ✅, bilingual ✅, email template ✅ |
-| 8 | Pengujian Manual | ❌ Belum | Belum ada testing terstruktur |
+| 2 | Web Storefront Next.js | ✅ Branded | Next.js 15.3.9, fully branded + bilingual + filter + logo |
+| 3 | Mobile App Expo | 🟡 SDK Upgraded | SDK v1→v2 via compat shim, Expo ~49 (perlu upgrade ke 52) |
+| 4 | Sinkronisasi & GitHub | ✅ Pushed | Struktur rapi, sudah push ke remote |
+| 5 | Integrasi Midtrans | ✅ Verified | API route + webhook + Snap popup, endpoint verified ✅ |
+| 6 | Kustomisasi Domain Koi | 🟡 85% | Logo ✅, favicon ✅, branded ✅, seed data ✅, filter koi ✅ |
+| 7 | Fitur Post-Starter | 🟡 80% | Web ✅, email ✅, bilingual ✅, mobile SDK ✅ |
+| 8 | Pengujian Manual | 🟡 30% | Health ✅, Midtrans endpoint ✅, build ✅ |
 
 ---
 
