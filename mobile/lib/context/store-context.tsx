@@ -17,6 +17,8 @@ interface LineInfoProps {
 
 interface StoreContext {
   countryCode: string | undefined
+  cart: any | null
+  totalItems: number
   setRegion: (regionId: string, countryCode: string) => void
   addItem: (item: VariantInfoProps) => void
   updateItem: (item: LineInfoProps) => void
@@ -47,6 +49,9 @@ export const StoreProvider = ({ children }: StoreProps) => {
   const [countryCode, setCountryCode] = useState<string | undefined>(undefined)
   const { timedOpen } = useCartDropdown()
 
+  // Compute total items from cart
+  const totalItems = cart?.items?.reduce((sum: number, item: any) => sum + item.quantity, 0) || 0
+
   // ========================================
   // Storage helpers
   // ========================================
@@ -65,16 +70,16 @@ export const StoreProvider = ({ children }: StoreProps) => {
     return null
   }
 
-  const storeCart = async (id: string) => {
+  const storeCartId = async (id: string) => {
     if (!IS_SERVER) await AsyncStorage.setItem(CART_KEY, id)
   }
 
-  const getCart = async () => {
+  const getCartId = async () => {
     if (!IS_SERVER) return await AsyncStorage.getItem(CART_KEY)
     return null
   }
 
-  const deleteCart = async () => {
+  const deleteCartId = async () => {
     if (!IS_SERVER) await AsyncStorage.removeItem(CART_KEY)
   }
 
@@ -86,7 +91,7 @@ export const StoreProvider = ({ children }: StoreProps) => {
       const result = await medusaClient.store.cart.create({ region_id: regionId })
       const newCart = result.cart
       setCart(newCart)
-      await storeCart(newCart.id)
+      await storeCartId(newCart.id)
     } catch (error) {
       if (process.env.NODE_ENV === 'development') console.error('Create cart error:', error)
     }
@@ -105,7 +110,7 @@ export const StoreProvider = ({ children }: StoreProps) => {
   }
 
   const resetCart = async () => {
-    await deleteCart()
+    await deleteCartId()
     const savedRegion = await getRegion()
     await createNewCart(savedRegion?.regionId)
   }
@@ -128,24 +133,23 @@ export const StoreProvider = ({ children }: StoreProps) => {
 
   useEffect(() => {
     const ensureCart = async () => {
-      const cartId = await getCart()
+      const cartId = await getCartId()
       const region = await getRegion()
 
       if (cartId) {
         try {
-          // Medusa v2 SDK: store.cart.retrieve
           const result = await medusaClient.store.cart.retrieve(cartId)
           const existingCart = result.cart
 
           if (!existingCart || existingCart.completed_at) {
-            await deleteCart()
+            await deleteCartId()
             await createNewCart()
             return
           }
 
           setCart(existingCart)
         } catch {
-          await deleteCart()
+          await deleteCartId()
           await createNewCart(region?.regionId)
         }
       } else {
@@ -169,7 +173,7 @@ export const StoreProvider = ({ children }: StoreProps) => {
         quantity,
       })
       setCart(result.cart)
-      await storeCart(result.cart.id)
+      await storeCartId(result.cart.id)
       timedOpen()
       toast.success('Ditambahkan ke keranjang')
     } catch (error: any) {
@@ -183,7 +187,7 @@ export const StoreProvider = ({ children }: StoreProps) => {
     try {
       const result = await medusaClient.store.cart.deleteLineItem(cart.id, lineId)
       setCart(result.cart)
-      await storeCart(result.cart.id)
+      await storeCartId(result.cart.id)
     } catch (error: any) {
       console.error('Delete item error:', error)
     }
@@ -194,7 +198,7 @@ export const StoreProvider = ({ children }: StoreProps) => {
     try {
       const result = await medusaClient.store.cart.updateLineItem(cart.id, lineId, { quantity })
       setCart(result.cart)
-      await storeCart(result.cart.id)
+      await storeCartId(result.cart.id)
     } catch (error: any) {
       console.error('Update item error:', error)
     }
@@ -204,6 +208,8 @@ export const StoreProvider = ({ children }: StoreProps) => {
     <StoreContext.Provider
       value={{
         countryCode,
+        cart,
+        totalItems,
         setRegion,
         addItem,
         deleteItem,

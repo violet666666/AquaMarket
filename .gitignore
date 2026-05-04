@@ -1,8 +1,11 @@
 .env
+.env.local
 node_modules
 .turbo
 .next
+.expo
 dist
+build
 .wrangler
 coverage
 .DS_Store

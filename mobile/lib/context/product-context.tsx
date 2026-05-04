@@ -1,7 +1,7 @@
 import { canBuy } from '@/lib/util/can-buy'
 import { findCheapestPrice } from '@/lib/util/prices'
 import isEqual from 'lodash/isEqual'
-import { formatVariantPrice, useCart } from 'medusa-react'
+import { formatVariantPrice } from 'medusa-react'
 import React, {
   createContext,
   useContext,
@@ -42,8 +42,7 @@ export const ProductProvider = ({
   const [maxQuantityMet, setMaxQuantityMet] = useState<boolean>(false)
   const [inStock, setInStock] = useState<boolean>(true)
 
-  const { addItem } = useStore()
-  const { cart } = useCart()
+  const { addItem, cart } = useStore()
   const { variants } = product
 
   useEffect(() => {
