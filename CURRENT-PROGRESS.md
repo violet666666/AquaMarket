@@ -1,13 +1,13 @@
 # CURRENT-PROGRESS.md — AquaMarket (Glory Lumajang Koi Center)
 
-**Terakhir Diperbarui:** 3 Mei 2026 (20:55 WIB)  
-**Status Keseluruhan:** 🟡 Dalam Pengembangan (~72%)
+**Terakhir Diperbarui:** 4 Mei 2026 (13:32 WIB)  
+**Status Keseluruhan:** 🟡 Dalam Pengembangan (~78%)
 
 ---
 
 ## Ringkasan Singkat
 
-AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (backend), **Next.js 15** (web storefront), dan **Expo/React Native** (mobile app). Proyek sudah melewati fase fondasi — backend, web, dan mobile sudah terinisialisasi dan saling terhubung. Kustomisasi admin panel sudah cukup matang. **Storefront sudah fully branded dan dilokalkan ke Bahasa Indonesia.** Integrasi Midtrans Snap sudah dikodekan (API route + webhook + frontend component), tinggal menunggu testing sandbox.
+AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (backend), **Next.js 15** (web storefront), dan **Expo/React Native** (mobile app). Proyek sudah melewati fase fondasi — backend, web, dan mobile sudah terinisialisasi dan saling terhubung. Kustomisasi admin panel sudah cukup matang. **Storefront sudah fully branded, dilokalkan, dan dilengkapi bilingual (ID/EN).** Integrasi Midtrans Snap sudah dikodekan. Email template sudah di-upgrade ke HTML responsif. Filter produk koi dan kategori varietas sudah tersedia.
 
 ---
 
@@ -17,12 +17,12 @@ AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (b
 |---|---|---|---|
 | 0 | Persiapan Laptop | ✅ Selesai | Node 20+, Git, PostgreSQL (Neon cloud) |
 | 1 | Backend Medusa.js v2 | ✅ Selesai | v2.13.6, admin panel berjalan, 4 widget kustom |
-| 2 | Web Storefront Next.js | ✅ Branded | Next.js 15.3.9, fully branded + bilingual |
+| 2 | Web Storefront Next.js | ✅ Branded | Next.js 15.3.9, fully branded + bilingual + filter |
 | 3 | Mobile App Expo | ⚠️ Baseline | Expo ~49 (perlu upgrade), SDK v1 (inkompatibel v2) |
 | 4 | Sinkronisasi & GitHub | ⚠️ Sebagian | Struktur rapi, .gitignore ada, push belum diverifikasi |
-| 5 | Integrasi Midtrans | 🟡 Coded | API route + webhook + Snap popup sudah dibuat, menunggu testing |
-| 6 | Kustomisasi Domain Koi | ⚠️ Progressing | Admin branded, storefront branded, seed data belum |
-| 7 | Fitur Post-Starter | 🟡 Progressing | Beranda ✅, product tabs ✅, bilingual ✅, filter belum |
+| 5 | Integrasi Midtrans | 🟡 Coded | API route + webhook + Snap popup dibuat, menunggu testing |
+| 6 | Kustomisasi Domain Koi | 🟡 75% | Admin branded, storefront branded, seed data siap, filter koi ✅ |
+| 7 | Fitur Post-Starter | 🟡 65% | Beranda ✅, kategori koi ✅, filter ✅, bilingual ✅, email template ✅ |
 | 8 | Pengujian Manual | ❌ Belum | Belum ada testing terstruktur |
 
 ---
@@ -43,10 +43,14 @@ AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (b
 - [x] **Subscriber — Customer Welcome**: Email selamat datang customer baru
 - [x] **Subscriber — Order Shipped**: Email notifikasi pengiriman + nomor resi
 - [x] Seed script kategori koi (8 varietas: Kohaku, Showa, Sanke, Tancho, Bekko, Ogon, Asagi, Shiro Utsuri)
+- [x] **🆕 Seed script produk koi** — 10 produk referensi dengan harga IDR, metadata lengkap
 - [x] Railway.toml siap deploy
 - [x] **Midtrans API Keys** tersimpan di `.env` (Merchant ID, Server Key, Client Key)
-- [x] **API Route — Create Transaction** (`/store/custom/midtrans/create-transaction`) — Generate Snap token
-- [x] **API Route — Notification Webhook** (`/store/custom/midtrans/notification`) — Terima & verifikasi notifikasi pembayaran dengan SHA512 signature
+- [x] **API Route — Create Transaction** — Generate Snap token
+- [x] **API Route — Notification Webhook** — Verifikasi SHA512 signature
+- [x] **🆕 Email Template HTML Responsif** — 3 template branded (order-placed, customer-welcome, order-shipment)
+- [x] **🆕 Security** — JWT_SECRET & COOKIE_SECRET 256-bit hex
+- [x] **🆕 Dynamic backendUrl** — `medusa-config.ts` menggunakan env variable
 
 ### Web Storefront (Next.js 15)
 - [x] Next.js 15.3.9 terinstall
@@ -55,31 +59,35 @@ AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (b
 - [x] Google OAuth callback route (`/api/auth/google/callback`)
 - [x] Tombol "Masuk dengan Google" di halaman login
 - [x] Semua halaman starter berfungsi (home, store, product detail, cart, checkout, account, order)
-- [x] **Hero section branded AquaMarket** — gradient teal, tagline koi, trust badges (LAG, Pengiriman Aman, Koi Bersertifikat)
-- [x] **Navbar rebranded** — "Medusa Store" → "AquaMarket" + **Language Toggle (ID/EN)**
+- [x] **Hero section branded AquaMarket** — gradient teal, tagline koi, trust badges, bilingual
+- [x] **Navbar rebranded** — "AquaMarket" + **Language Toggle (ID/EN)**
 - [x] **Footer rebranded** — branded deskripsi, link toko, copyright AquaMarket
 - [x] **Side menu Indonesian** — Beranda, Semua Produk, Akun Saya, Keranjang
-- [x] **Metadata SEO** — title, description, keywords untuk koi fish di root layout
+- [x] **Metadata SEO** — title, description, keywords untuk koi fish
 - [x] **HTML lang="id"** — bahasa Indonesia
 - [x] **404 page Indonesian** — "Halaman Tidak Ditemukan"
 - [x] **Login page Indonesian** — "Selamat Datang Kembali", "Masuk", "Daftar sekarang"
 - [x] **Register page Indonesian** — "Daftar Akun AquaMarket", label form Indonesian
 - [x] **Product tabs koi-specific** — Informasi Ikan, Panduan Perawatan, Pengiriman & Garansi
-- [x] **Grade badge warna** — tampilkan grade koi (Grand Champion=gold, S=teal, A=green, B=blue)
+- [x] **Grade badge warna** — Grand Champion=gold, S=teal, A=green, B=blue
 - [x] **LAG badge** — tampil otomatis jika metadata.lag=true
 - [x] **Tailwind brand colors** — palette aqua (teal) + gold accent
-- [x] **Checkout — Addresses** Indonesian — "Alamat Pengiriman", "Alamat Penagihan", "Lanjut ke Pengiriman"
-- [x] **Checkout — Shipping** Indonesian — "Pengiriman", "Metode pengiriman", "Lanjut ke Pembayaran"
-- [x] **Checkout — Payment** Indonesian — "Pembayaran", "Metode pembayaran", "Lanjut ke Tinjauan"
-- [x] **Checkout — Review** Indonesian — "Tinjauan & Pembayaran" + Midtrans button
+- [x] **Checkout — Addresses** Indonesian
+- [x] **Checkout — Shipping** Indonesian
+- [x] **Checkout — Payment** Indonesian
+- [x] **Checkout — Review** Indonesian + Midtrans button
 - [x] **Checkout — Summary** Indonesian — "Keranjang Anda"
-- [x] **Cart Totals** bilingual — Subtotal, Ongkir, Diskon, Pajak, Total (hook-based)
-- [x] **Midtrans Payment Button** — Tombol "Bayar Sekarang" di review step
-- [x] **Midtrans Snap.js Helper** — Load script Snap.js secara dynamic
-- [x] **Order Confirmed Page** — Halaman konfirmasi sukses/pending/error dengan info koi
-- [x] **🆕 Bilingual System (ID/EN)** — React Context + useLanguage hook
-- [x] **🆕 Translation Dictionary** — 150+ string terjemahan untuk semua section UI
-- [x] **🆕 Language Toggle** — Tombol ID/EN di navbar (desktop + mobile) dengan localStorage persistence
+- [x] **Cart Totals** bilingual — hook-based
+- [x] **Midtrans Payment Button** — Tombol "Bayar Sekarang"
+- [x] **Midtrans Snap.js Helper** — Load script dynamic
+- [x] **Order Confirmed Page** — Halaman konfirmasi pembayaran
+- [x] **Bilingual System (ID/EN)** — React Context + useLanguage hook
+- [x] **Translation Dictionary** — 150+ string terjemahan
+- [x] **Language Toggle** — Tombol ID/EN di navbar (desktop + mobile)
+- [x] **🆕 Koi Categories Section** — Grid 8 varietas koi di homepage dengan emoji + warna
+- [x] **🆕 Koi Filter** — Filter varietas, grade, rentang harga, ukuran di halaman store
+- [x] **🆕 Store Page SEO** — Metadata Indonesian untuk halaman koleksi
+- [x] **🆕 Store Title** — "Koleksi Ikan Koi" (dari "All products")
 
 ### Mobile App (Expo)
 - [x] Expo ~49 terinstall
@@ -94,55 +102,43 @@ AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (b
 ### 🔴 Critical (Blocking MVP)
 
 - [x] ~~**Midtrans Payment Gateway — Kode**~~ ✅ SELESAI
-  - [x] ~~Simpan Server Key & Client Key ke `.env`~~
-  - [x] ~~Buat API route untuk create Midtrans transaction~~
-  - [x] ~~Implementasi Snap popup di web checkout~~
-  - [x] ~~Handle callback/webhook dari Midtrans~~
-  - [ ] Testing sandbox transaction (perlu backend running)
-  - [ ] Update status order otomatis berdasarkan hasil pembayaran (Medusa payment module integration)
+  - [ ] Testing sandbox transaction (perlu backend running + deploy)
+  - [ ] Integrasi Medusa payment module (update order status otomatis)
 
-- [ ] **Update Seed Data**
-  - [ ] Ganti produk demo (T-Shirt, Sweatshirt) → produk ikan koi
-  - [ ] Ganti region Europe → Indonesia
-  - [ ] Ganti currency EUR/USD → IDR
-  - [ ] Tambahkan shipping option Indonesia (JNE/J&T/SiCepat manual)
+- [x] ~~**Seed Data — Script**~~ ✅ SCRIPT SIAP
+  - [ ] Run seed categories di database
+  - [ ] Input produk via Admin Panel (data referensi sudah ada)
+  - [ ] Setup region Indonesia + currency IDR via Admin Panel
+  - [ ] Setup shipping options (JNE/J&T/SiCepat) via Admin Panel
 
 - [ ] **Fix Mobile SDK Compatibility**
   - [ ] Ganti `@medusajs/medusa-js` v1 → `@medusajs/js-sdk` (v2)
   - [ ] Ganti `medusa-react` v1 → custom hooks atau tanstack query
   - [ ] Upgrade Expo SDK 49 → 52
 
-- [x] **Security** — JWT_SECRET & COOKIE_SECRET sudah diganti ke random 256-bit hex
-  - [x] ~~Ganti `JWT_SECRET` dari "supersecret" → random string~~
-  - [x] ~~Ganti `COOKIE_SECRET` dari "supersecret" → random string~~
-  - [ ] Konfigurasi `REDIS_URL` (Upstash) — opsional, Medusa jalan tanpa Redis
+- [x] ~~**Security**~~ ✅ SELESAI
+  - [x] JWT_SECRET — 256-bit hex
+  - [x] COOKIE_SECRET — 256-bit hex
+  - [ ] Konfigurasi `REDIS_URL` (Upstash) — opsional
 
 ### 🟡 High Priority (Needed for MVP)
 
-- [x] ~~**Branding Web Storefront**~~ ✅ SELESAI
-- [x] ~~**Halaman Produk Koi-Specific**~~ ✅ SELESAI
-- [x] ~~**Indonesianisasi UI**~~ ✅ SELESAI
-- [x] ~~**Bilingual System (ID/EN)**~~ ✅ SELESAI
+- [x] ~~**Branding Web Storefront**~~ ✅
+- [x] ~~**Halaman Produk Koi-Specific**~~ ✅
+- [x] ~~**Indonesianisasi UI**~~ ✅
+- [x] ~~**Bilingual System (ID/EN)**~~ ✅
+- [x] ~~**Koi Categories di Beranda**~~ ✅
+- [x] ~~**Filter Produk Koi**~~ ✅
+- [x] ~~**Email Template HTML**~~ ✅
 
 - [ ] **Logo & Favicon** (perlu desain/aset dari user)
-- [ ] Tampilkan kategori koi di halaman beranda (perlu data)
-
-- [ ] **Filter Produk**
-  - [ ] Filter jenis koi (varietas)
-  - [ ] Filter rentang harga
-  - [ ] Filter ukuran ikan
-  - [ ] Filter grade
-
-- [ ] **Email Template**
-  - [ ] Buat template HTML responsif (ganti inline string saat ini)
-  - [ ] Custom domain email (ganti `onboarding@resend.dev`)
 
 ### 🟢 Nice-to-Have (Post-MVP)
 
 - [ ] Push notification mobile (Expo Notifications + FCM)
-- [ ] Deploy backend ke Railway
+- [ ] Deploy backend ke Railway (ada error, perlu debug)
 - [ ] Deploy web ke Vercel
-- [x] ~~Multi-bahasa (i18n)~~ ✅ SELESAI (ID/EN toggle)
+- [x] ~~Multi-bahasa (i18n)~~ ✅ (ID/EN toggle)
 - [ ] Multi-currency (USD untuk ekspor)
 - [ ] Review & rating produk
 - [ ] Live chat
@@ -160,10 +156,10 @@ AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (b
 | Web | Next.js (App Router) | 15.3.9 |
 | Web Styling | Tailwind CSS | 3.x |
 | Mobile | Expo / React Native | ~49 / 0.72.4 |
-| Email | Resend API | Aktif |
+| Email | Resend API + HTML Templates | Aktif ✅ |
 | Auth | Google OAuth | Aktif |
-| Payment | Midtrans Snap | 🟡 Coded (belum tested) |
-| Hosting Backend | Railway | Belum deploy |
+| Payment | Midtrans Snap | 🟡 Coded |
+| Hosting Backend | Railway | ⚠️ Error (perlu debug) |
 | Hosting Web | Vercel | Belum deploy |
 
 ---
@@ -185,6 +181,7 @@ AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (b
 | `MIDTRANS_SERVER_KEY` | ✅ Mid-server-*** |
 | `MIDTRANS_CLIENT_KEY` | ✅ Mid-client-*** |
 | `MIDTRANS_IS_PRODUCTION` | ✅ false |
+| `MEDUSA_BACKEND_URL` | 🆕 Perlu diset saat deploy |
 
 ### Web (`/web/.env.local`)
 | Variable | Status |
@@ -202,46 +199,36 @@ AquaMarket adalah toko online ikan koi yang dibangun di atas **Medusa.js v2** (b
 
 ---
 
-## File Baru Dibuat Sesi Ini
-
-| File | Fungsi |
-|---|---|
-| `backend/src/api/store/custom/midtrans/create-transaction/route.ts` | API: generate Snap token |
-| `backend/src/api/store/custom/midtrans/notification/route.ts` | Webhook: terima notif pembayaran |
-| `web/src/lib/midtrans.ts` | Helper: load Snap.js dynamic |
-| `web/src/lib/i18n/translations.ts` | Dictionary: 150+ string ID/EN |
-| `web/src/lib/context/language-context.tsx` | Context: LanguageProvider + useLanguage hook |
-| `web/src/modules/checkout/components/midtrans-payment/index.tsx` | UI: Tombol "Bayar Sekarang" |
-| `web/src/modules/layout/components/language-toggle/index.tsx` | UI: Tombol toggle ID/EN di navbar |
-| `web/src/app/[countryCode]/(main)/order/confirmed/page.tsx` | Page: Konfirmasi pembayaran |
-
----
-
 ## Rencana Kerja Berikutnya
 
-**Fase saat ini:** Testing Midtrans + Seed Data Koi
+**Fase saat ini:** Deploy + Seed Data + Testing
 
-1. ✅ ~~Branding storefront (title, hero, warna teal)~~ — SELESAI
-2. ✅ ~~Halaman produk koi-specific (atribut, perawatan, LAG badge)~~ — SELESAI
-3. ✅ ~~Indonesianisasi UI (login, menu, footer, 404, checkout)~~ — SELESAI
-4. ✅ ~~Midtrans integration (API + Webhook + Snap popup)~~ — CODED
-5. ✅ ~~Bilingual system (ID/EN toggle di navbar)~~ — SELESAI
-6. ⬜ Testing Midtrans sandbox end-to-end
-7. ⬜ Update seed data → produk koi + region Indonesia + IDR
-8. ⬜ Buat/pasang logo dan favicon
-9. ⬜ Tampilkan kategori koi di beranda
+1. ✅ ~~Branding storefront~~ — SELESAI
+2. ✅ ~~Produk koi-specific~~ — SELESAI
+3. ✅ ~~Indonesianisasi + Bilingual~~ — SELESAI
+4. ✅ ~~Midtrans integration~~ — CODED
+5. ✅ ~~Email template HTML~~ — SELESAI
+6. ✅ ~~Koi categories di beranda~~ — SELESAI
+7. ✅ ~~Filter produk koi~~ — SELESAI
+8. ✅ ~~Security (secrets)~~ — SELESAI
+9. ⬜ **Fix Railway deployment** (user perlu share error log)
+10. ⬜ Run seed data + input produk via Admin Panel
+11. ⬜ Testing Midtrans sandbox
+12. ⬜ Logo & Favicon
 
 ---
 
 ## Catatan Penting
 
-> **Midtrans:** Key yang disimpan MUNGKIN format Production (tanpa prefix `SB-`). Untuk testing sandbox, user perlu cek di dashboard.sandbox.midtrans.com dan ambil key sandbox jika tersedia. Kode sudah set `MIDTRANS_IS_PRODUCTION=false` sehingga akan mengarah ke endpoint sandbox.
+> **Railway Error:** User melaporkan error deployment. Backend build lokal SUKSES. Kemungkinan masalah di environment variables yang belum diset di Railway dashboard. User perlu share error log untuk diagnosis spesifik.
 
-> **Bilingual:** Sistem i18n menggunakan React Context + localStorage persistence. User bisa toggle ID/EN kapan saja di navbar. Saat ini cart-totals sudah fully hook-based; komponen lain masih menggunakan hardcoded Indonesian text yang bisa di-migrate ke hook secara bertahap.
+> **Midtrans:** Key yang disimpan MUNGKIN format Production (tanpa prefix `SB-`). Pastikan cek di dashboard.sandbox.midtrans.com.
 
-> **Mobile App:** Library `@medusajs/medusa-js` dan `medusa-react` yang dipakai saat ini adalah versi Medusa v1 dan TIDAK kompatibel dengan backend Medusa v2. Ini harus di-upgrade sebelum mobile app bisa berfungsi dengan benar.
+> **Email Templates:** Sudah di-upgrade dari inline text ke HTML responsif dengan branding AquaMarket. 3 template: order-placed (dengan tabel item), customer-welcome, order-shipment (dengan tips penerimaan koi).
 
-> **Security:** `JWT_SECRET` dan `COOKIE_SECRET` WAJIB diganti sebelum deploy ke production. Nilai saat ini ("supersecret") hanya untuk development lokal.
+> **Seed Data:** Script `seed-koi-products.js` berisi 10 produk referensi. Produk harus diinput melalui Medusa Admin Panel karena v2 membutuhkan workflow module.
+
+> **Mobile App:** SDK v1 TIDAK kompatibel dengan backend v2. Harus di-upgrade sebelum mobile berfungsi.
 
 ---
 

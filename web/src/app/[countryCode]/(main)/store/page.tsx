@@ -4,8 +4,8 @@ import { SortOptions } from "@modules/store/components/refinement-list/sort-prod
 import StoreTemplate from "@modules/store/templates"
 
 export const metadata: Metadata = {
-  title: "Store",
-  description: "Explore all of our products.",
+  title: "Koleksi Ikan Koi | AquaMarket",
+  description: "Jelajahi koleksi ikan koi premium dari Glory Lumajang Koi Center. Kohaku, Showa, Sanke, dan varietas terbaik dengan Live Arrival Guarantee.",
 }
 
 type Params = {
