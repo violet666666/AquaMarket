@@ -1,8 +1,9 @@
-import Medusa from '@medusajs/medusa-js'
-import { QueryClient } from '@tanstack/react-query'
+import Medusa from "@medusajs/js-sdk"
+import { QueryClient } from "@tanstack/react-query"
 
 // Defaults to standard port for Medusa server
-let MEDUSA_BACKEND_URL = process.env.EXPO_PUBLIC_MEDUSA_BACKEND_URL || 'http://localhost:9000'
+let MEDUSA_BACKEND_URL =
+  process.env.EXPO_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,6 +15,10 @@ const queryClient = new QueryClient({
   },
 })
 
-const medusaClient = new Medusa({ baseUrl: MEDUSA_BACKEND_URL, maxRetries: 3 })
+// Medusa JS SDK v2 client
+const medusaClient = new Medusa({
+  baseUrl: MEDUSA_BACKEND_URL,
+  publishableKey: process.env.EXPO_PUBLIC_MEDUSA_PUBLISHABLE_KEY || "",
+})
 
 export { MEDUSA_BACKEND_URL, queryClient, medusaClient }

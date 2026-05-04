@@ -4,6 +4,9 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "medusa-react": [
+        "./lib/medusa-compat"
       ]
     }
   },
