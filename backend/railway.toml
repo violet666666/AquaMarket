@@ -1,6 +1,6 @@
 [build]
 builder = "nixpacks"
-buildCommand = "npm run build && npx medusa db:migrate"
+buildCommand = "npm run build -- --no-admin"
 
 [build.env]
 DATABASE_URL = "${{DATABASE_URL}}"
@@ -18,7 +18,8 @@ MIDTRANS_CLIENT_KEY = "${{MIDTRANS_CLIENT_KEY}}"
 MIDTRANS_IS_PRODUCTION = "${{MIDTRANS_IS_PRODUCTION}}"
 
 [deploy]
-startCommand = "npx medusa db:migrate && npm run start"
+preDeployCommand = "npx medusa db:migrate"
+startCommand = "npm run start -- --no-admin"
 healthcheckPath = "/health"
 healthcheckTimeout = 300
 restartPolicyType = "on_failure"

@@ -57,5 +57,6 @@ module.exports = defineConfig({
   ],
   admin: {
     backendUrl: process.env.MEDUSA_BACKEND_URL || `http://localhost:${process.env.PORT || 9000}`,
+    disable: process.env.NODE_ENV === "production",
   },
 })
